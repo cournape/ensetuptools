@@ -421,7 +421,7 @@ The command needs to be one of the following: install, upgrade, update,
 rollback, remove, list, save_state
 """
 
-    parser = OptionParser(usage="usage: enpkg command [options]",
+    parser = OptionParser(usage="usage: easy_manage command [options]",
                           description=description,
                           version="ensetuptools version %s" % __version__)
 
@@ -478,7 +478,7 @@ def main():
     parser = setup_parser()
     options, args = parser.parse_args()
     if len(args) < 1:
-        parser.error("Must call enpkg with one of 'install', 'upgrade', "
+        parser.error("Must call easy_manage with one of 'install', 'upgrade', "
                      "'update', 'rollback', 'remove', 'save_state', or "
                      "'list', see -h for more details")
 

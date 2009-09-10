@@ -11,12 +11,12 @@ Improvements added:
 
  * added support for removing a package
  * added support for post-install and pre-uninstall scripts
- * improved dependency resolution with enpkg.
+ * improved dependency resolution with easy_manage.
  * easy_install can now work through a proxy for both http and https urls.
  * setup.py develop also runs post-install scripts and --uninstall runs
    pre-uninstall scripts
- * easy_install and enpkg now prefer final releases of distributions over dev
-   builds.
+ * easy_install and easy_manage now prefer final releases of distributions
+   over dev builds.
 
 Installation:
 -------------
@@ -28,7 +28,7 @@ Installation:
    `ez_ensetuptools.py <http://code.enthought.com/src/ez_ensetuptools.py>`_
    and then un the script at a command prompt: ``python ez_ensetuptools.py``
  * Once the script completes, you will have the scripts
-   enpkg and easy_install installed on your system.
+   easy_manage and easy_install installed on your system.
 
 To ensure that you are running ensetuptools's easy_install, type at the
 command prompt: ``easy_install --version``

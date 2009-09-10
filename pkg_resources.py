@@ -533,7 +533,7 @@ class WorkingSet(object):
                         raise DistributionNotFound("""
 Could not find installed package matching %r
 
-To resolve this problem you may want to try the command: enpkg list
+To resolve this problem you may want to try the command: easy_manage list
 This will list all installed packages.""" % req)
 
                 to_activate.append(dist)
