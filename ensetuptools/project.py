@@ -159,7 +159,7 @@ class RemoteProject(PkgResourcesProject):
         Install a package by fetching it into a temporary directory and then
         calling easy_install with the appropriate args.
         """
-        tmpdir = mkdtemp(prefix="enstaller-")
+        tmpdir = mkdtemp(prefix="ensetuptools-")
         try:
             location = self.fetch(tmpdir, source, develop)
             # XXX more sophistication here?

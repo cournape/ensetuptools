@@ -1,8 +1,8 @@
 from distutils import log
 
-from enstaller import enstaller
+from ensetuptools import ensetuptools
 
-class list_packages(enstaller):
+class list_packages(ensetuptools):
     def initialize_options(self):
         pass
 

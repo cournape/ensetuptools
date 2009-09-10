@@ -8,7 +8,7 @@ from distutils.core import Command as _Command
 from distutils.util import convert_path
 import os.path
 
-# hacked from 0.6c9 so we know it is Enstaller's and comes *after* 0.6c9 in
+# hacked from 0.6c9 so we know it is ensetuptools's and comes *after* 0.6c9 in
 # revision.
 __version__ = '0.6c9-s1'
 __all__ = [

@@ -15,9 +15,9 @@ from xmlrpclib import Server
 from distutils.errors import DistutilsError
 from os.path import abspath, exists, isdir
 
-from enstaller.project import (Project, ProjectUnion, PkgResourcesProject,
+from ensetuptools.project import (Project, ProjectUnion, PkgResourcesProject,
                                EasyInstallProject, HTMLProject, XMLRPCProject)
-from enstaller.utilities import rst_table, rmtree_error
+from ensetuptools.utilities import rst_table, rmtree_error
 from logging import debug, info, warning
 from pkg_resources import Environment
 from setuptools.command.easy_install import PthDistributions
@@ -146,7 +146,7 @@ class EasyInstallRepository(LocalRepository):
 class RemoteRepository(Repository):
     def __init__(self, *args, **kwargs):
         super(RemoteRepository, self).__init__(*args, **kwargs)
-        self.tmpdir = mkdtemp(prefix="enstaller-")
+        self.tmpdir = mkdtemp(prefix="ensetuptools-")
 
     def __del__(self):
         rmtree(self.tmpdir, onerror=rmtree_error)
@@ -191,7 +191,7 @@ class HTMLRepository(RemoteRepository):
             self.environment = PackageIndex(no_default_index=True)
             self.environment.add_find_links([self.location])
         self._projects = None
-        self.tmpdir = mkdtemp(prefix="enstaller-")
+        self.tmpdir = mkdtemp(prefix="ensetuptools-")
         self.verbose = verbose
 
     @property
@@ -233,7 +233,7 @@ class XMLRPCRepository(RemoteRepository):
         self.environment = Environment(search_path=[])
         self.server = Server(self.location)
         self._projects = None
-        self.tmpdir = mkdtemp(prefix="enstaller-")
+        self.tmpdir = mkdtemp(prefix="ensetuptools-")
         self.verbose = verbose
 
     @property

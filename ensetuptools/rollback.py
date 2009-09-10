@@ -16,7 +16,7 @@ from distutils import sysconfig
 import os
 from time import strftime
 
-# Enstaller imports.
+# ensetuptools imports.
 from pkg_resources import Requirement
 from requirements import get_site_packages, install_requirement
 
@@ -42,38 +42,38 @@ def parse_project_str(project_str):
 
 def retrieve_states():
     """
-    Read the enstaller.cache file to retrieve all of the state entries.
+    Read the ensetuptools.cache file to retrieve all of the state entries.
     Return an array of the entries, where each index contains an array
     of two elements.  The first element is the timestamp and the second
-    element is the list of package_name-versions.  If the enstaller.cache is
+    element is the list of package_name-versions.  If the ensetuptools.cache is
     empty or does not exist, return None.
     """
-    # Check if enstaller.cache exists.  If it doesn't, print out an error
+    # Check if ensetuptools.cache exists.  If it doesn't, print out an error
     # message and return None.
     site_packages = sysconfig.get_python_lib()
-    enstaller_cache = os.path.join(site_packages, 'enstaller.cache')
-    if not os.path.exists(enstaller_cache):
-        print "The enstaller.cache does not exist."
+    ensetuptools_cache = os.path.join(site_packages, 'ensetuptools.cache')
+    if not os.path.exists(ensetuptools_cache):
+        print "The ensetuptools.cache does not exist."
         return None
 
-    # Read in all of the lines from the enstaller.cache.
-    # If the enstaller.cache can not be read, print an error message and
+    # Read in all of the lines from the ensetuptools.cache.
+    # If the ensetuptools.cache can not be read, print an error message and
     # return None.  If there are no lines in the
-    # enstaller.cache for some reason, print an error message as well.
+    # ensetuptools.cache for some reason, print an error message as well.
     file_lines = None
     try:
-        f = open(enstaller_cache, 'r')
+        f = open(ensetuptools_cache, 'r')
         file_lines = f.readlines()
         f.close()
     except:
-        print "Error in reading the enstaller.cache."
+        print "Error in reading the ensetuptools.cache."
         return None
     if len(file_lines) == 0:
-        print ("There are no entries in the enstaller.cache so a "
+        print ("There are no entries in the ensetuptools.cache so a "
             "rollback can not be performed.")
         return None
 
-    # Iterate through the lines from the enstaller.cache and from this
+    # Iterate through the lines from the ensetuptools.cache and from this
     # generate the 2D array of timestamps/project_name-versions and then
     # return it after reversing the
     # list so that it is in descending order by timestamp.
@@ -96,7 +96,7 @@ def retrieve_states():
 def save_state(verbose=False):
     """
     Adds an entry of the current working configuration of packages to the
-    enstaller.cache file.
+    ensetuptools.cache file.
     """
     # Determine the current local repository and from that build a list
     # of the current active packages.
@@ -117,7 +117,7 @@ def save_state(verbose=False):
 
     # Retrieve the most recently saved state and compare it to the current
     # state of the system.  If there have been no changes, then don't
-    # bother saving a entry to the enstaller.cache.
+    # bother saving a entry to the ensetuptools.cache.
     stored_states = retrieve_states()
     if stored_states:
         recent_state = stored_states[0]
@@ -125,21 +125,21 @@ def save_state(verbose=False):
         if project_list == recent_project_list:
             if verbose:
                 print ('There is no difference between the current state and '
-                    'the most recent saved state in the enstaller.cache, so '
+                    'the most recent saved state in the ensetuptools.cache, so '
                     'the current state does not need to be saved.')
             return
 
-    # Save the current state to an entry in the enstaller.cache file.
+    # Save the current state to an entry in the ensetuptools.cache file.
     # Each entry begins with a timestamp, followed by a colon, and then
     # a comma separated list of the project_name-versions for the
     # currently active packages.
-    enstaller_cache = os.path.join(site_packages, 'enstaller.cache')
+    ensetuptools_cache = os.path.join(site_packages, 'ensetuptools.cache')
     timestamp = strftime("%Y%m%d%H%M%S")
     pkg_list = ','.join(project_list)
     try:
         if verbose:
             print 'Saving current state...'
-        f = open(enstaller_cache, 'a')
+        f = open(ensetuptools_cache, 'a')
         f.write(timestamp + ':')
         f.write(pkg_list)
         f.write('\n')
@@ -147,7 +147,7 @@ def save_state(verbose=False):
         if verbose:
             print 'Successfully saved the current state.'
     except:
-        print "Error trying to write to the enstaller.cache."
+        print "Error trying to write to the ensetuptools.cache."
 
 
 def rollback_state(project_list, remote_repos=None, interactive=True,

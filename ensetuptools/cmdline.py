@@ -14,16 +14,16 @@ import sys
 import time
 from distutils import sysconfig
 
-from enstaller.config import get_configured_index, get_configured_repos
-from enstaller.proxy.api import setup_proxy
-from enstaller.repository import HTMLRepository, RepositoryUnion
-from enstaller.requirements import (deactivate_requirement, get_local_repos,
+from ensetuptools.config import get_configured_index, get_configured_repos
+from ensetuptools.proxy.api import setup_proxy
+from ensetuptools.repository import HTMLRepository, RepositoryUnion
+from ensetuptools.requirements import (deactivate_requirement, get_local_repos,
                                     get_site_packages, install_requirement,
                                     remove_requirement)
-from enstaller.rollback import (parse_project_str, retrieve_states,
+from ensetuptools.rollback import (parse_project_str, retrieve_states,
                                 rollback_state, save_state)
-from enstaller.upgrade import get_upgrade_str
-from enstaller.utilities import rst_table, query_user, user_select
+from ensetuptools.upgrade import get_upgrade_str
+from ensetuptools.utilities import rst_table, query_user, user_select
 from logging import (basicConfig, error, warning, info, debug, DEBUG, INFO,
                      WARNING, ERROR)
 from optparse import OptionParser
@@ -31,7 +31,7 @@ from pkg_resources import Requirement
 
 
 try:
-    from enstaller import __version__
+    from ensetuptools import __version__
 except ImportError:
     from __init__ import __version__
 
@@ -248,7 +248,7 @@ def rollback_menu(remote_repos=None, interactive=True,
     # Create a list of metadata for the possible rollback dates so that we
     # can create an auto-generated user selection layout.  Based on the
     # command-line options, we can limit the list of rollback points that
-    # are shown.  If the enstaller.cache doesn't exist, let the user know
+    # are shown.  If the ensetuptools.cache doesn't exist, let the user know
     # why they can not do a rollback.
     cached_states = retrieve_states()
     if not cached_states:
@@ -423,7 +423,7 @@ rollback, remove, list, save_state
 
     parser = OptionParser(usage="usage: enpkg command [options]",
                           description=description,
-                          version="Enstaller version %s" % __version__)
+                          version="ensetuptools version %s" % __version__)
 
     term_width = 80
     try:

@@ -218,9 +218,9 @@ def get_egg_specs_from_info(pkg_info) :
 def run_scripts(dist, phase, dry_run=False):
     """ Run any scripts associated in the distribution with the given phase.
     """
-    if dist.has_metadata("enstaller/"+phase):
+    if dist.has_metadata("ensetuptools/"+phase):
         info("Running %s scripts" % phase)
-        scripts = dist.get_metadata("enstaller/"+phase).split('\n')
+        scripts = dist.get_metadata("ensetuptools/"+phase).split('\n')
         for line in scripts:
             script = line.strip()
             if not line or line[0] == "#":

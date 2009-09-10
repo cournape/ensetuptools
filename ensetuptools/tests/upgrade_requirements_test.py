@@ -3,8 +3,8 @@ import os
 import sys
 import unittest
 
-# Enstaller imports.
-from enstaller.upgrade import get_upgrade_str
+# ensetuptools imports.
+from ensetuptools.upgrade import get_upgrade_str
 from pkg_resources import compose_version_string, parse_version
 
 

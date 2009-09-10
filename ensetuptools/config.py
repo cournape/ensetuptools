@@ -82,7 +82,7 @@ def init_config(path, verbose=True):
     This will fail silently if the user can not write to the specified path.
 
     """
-    from enstaller import __version__
+    from ensetuptools import __version__
 
     DATA = dict(py_ver=sys.version[:3],
                 prefix=sys.prefix,
@@ -94,7 +94,7 @@ def init_config(path, verbose=True):
         fp = open(path, 'w')
         fp.write("""\
 # This file contains the default package repositories used by
-# Enstaller version %(enst_ver)s for Python %(py_ver)s installed at
+# ensetuptools version %(enst_ver)s for Python %(py_ver)s installed at
 #
 #     %(prefix)s
 #
@@ -185,9 +185,9 @@ def _get_config_name():
 
     """
     if sys.platform == 'win32':
-        name = "enstaller.ini"
+        name = "ensetuptools.ini"
     else:
-        name = ".enstallerrc"
+        name = ".ensetuptoolsrc"
     return name
 
 
@@ -221,7 +221,7 @@ def _get_config_path():
     # If a config file can't be found in the user's HOME directory,
     # then look for one in the system site-packages.  Also, the name of
     # the config file in site-packages is different on non-Windows platforms
-    # so that it will sort next to the Enstaller egg.
+    # so that it will sort next to the ensetuptools egg.
     file_path = _get_system_config_path()
     if exists(file_path):
         return file_path

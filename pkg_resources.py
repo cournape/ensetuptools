@@ -519,7 +519,7 @@ class WorkingSet(object):
             req = requirements.pop(0)   # process dependencies breadth-first
             if req in processed or req.key == 'setuptools':
                 # Ignore cyclic or redundant dependencies or dependencies
-                #  on setuptools which enstaller replaces.
+                # on setuptools which ensetuptools replaces.
                 continue
             dist = best.get(req.key)
             if dist is None:
@@ -2217,8 +2217,8 @@ class Distribution(object):
 
 
     def check_version_conflict(self):
-        if self.key=='enstaller':
-            return      # ignore the inevitable enstaller self-conflicts  :(
+        if self.key=='ensetuptools':
+            return      # ignore the inevitable ensetuptools self-conflicts  :(
 
         nsp = dict.fromkeys(self._get_metadata('namespace_packages.txt'))
         loc = normalize_path(self.location)
@@ -2324,13 +2324,13 @@ def parse_requirements(strs):
             raise ValueError("Missing distribution spec", line)
         project_name = match.group(1)
 
-        # Enstaller needs special handling when a requirement is for
+        # ensetuptools needs special handling when a requirement is for
         # 'setuptools' due to the fact that we completely replace that project
         # and can't let it be installed due to incompatibilities when both
         # are installed simultaneously.  So we convert a search for setuptools
-        # to be a search for Enstaller.
+        # to be a search for ensetuptools.
         if project_name.lower() == 'setuptools':
-            project_name = 'Enstaller'
+            project_name = 'ensetuptools'
 
         p = match.end()
         extras = []

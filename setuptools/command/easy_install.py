@@ -9,7 +9,7 @@ file, or visit the `EasyInstall home page`__.
 
 __ http://peak.telecommunity.com/DevCenter/EasyInstall
 
-This is a patched version for Enstaller.
+This is a patched version for ensetuptools.
 """
 
 # Patched with easy_install.patch and prefer_released.patch from Enthought
@@ -39,14 +39,14 @@ sys_executable = os.path.normpath(sys.executable)
 
 
 
-if '--ignore-enstallerrc' in sys.argv:
+if '--ignore-ensetuptoolsrc' in sys.argv:
     def get_configured_repos():
         return []
 
     def get_configured_index():
         return None
 else:
-    from enstaller.config import get_configured_index, get_configured_repos
+    from ensetuptools.config import get_configured_index, get_configured_repos
 
 
 __all__ = [
@@ -75,7 +75,7 @@ class easy_install(Command):
         ("delete-conflicting", "D", "no longer needed; don't use this"),
         ("ignore-conflicts-at-my-risk", None,
             "no longer needed; don't use this"),
-        ("ignore-enstallerrc", None, "ignore the .enstallerrc file"),
+        ("ignore-ensetuptoolsrc", None, "ignore the .ensetuptoolsrc file"),
         ("ignore-pydistutils-cfg", None, "ignore distuils config files"),
         ("build-directory=", "b",
             "download/extract/build in DIR; keep the results"),
@@ -97,7 +97,7 @@ class easy_install(Command):
         'zip-ok', 'multi-version', 'exclude-scripts', 'upgrade', 'always-copy',
         'delete-conflicting', 'ignore-conflicts-at-my-risk', 'editable',
         'no-deps', 'local-snapshots-ok', 'allow-dev',
-        'ignore-enstallerrc', 'ignore-pydistutils-cfg',
+        'ignore-ensetuptoolsrc', 'ignore-pydistutils-cfg',
     ]
     negative_opt = {'always-unzip': 'zip-ok'}
     create_index = PackageIndex
@@ -122,7 +122,7 @@ class easy_install(Command):
         self.pth_file = self.always_copy_from = None
         self.delete_conflicting = None
         self.ignore_conflicts_at_my_risk = None
-        self.ignore_enstallerrc = None
+        self.ignore_ensetuptoolsrc = None
         self.ignore_pydistutils_cfg = None
         self.site_dirs = None
         self.installed_projects = {}
@@ -239,7 +239,7 @@ class easy_install(Command):
         self.outputs_this_package = []
 
         if self.proxy is not None:
-            from enstaller.proxy.api import setup_proxy
+            from ensetuptools.proxy.api import setup_proxy
             installed = setup_proxy(self.proxy)
             if self.verbose:
                 print "Yes...", installed
@@ -249,10 +249,10 @@ class easy_install(Command):
         if self.verbose != self.distribution.verbose:
             log.set_verbosity(self.verbose)
 
-        # Note that we import from enstaller right here to avoid circular
+        # Note that we import from ensetuptools right here to avoid circular
         # imports.  Also note that setuptools should usually not import
-        # from enstaller, but for certain reasons this import is required.
-        from enstaller.rollback import save_state
+        # from ensetuptools, but for certain reasons this import is required.
+        from ensetuptools.rollback import save_state
         save_state()
         
         try:
@@ -281,10 +281,10 @@ class easy_install(Command):
         finally:
             log.set_verbosity(self.distribution.verbose)
 
-            # Note that we import from enstaller right here to avoid circular
+            # Note that we import from ensetuptools right here to avoid circular
             # imports.  Also note that setuptools should usually not import
-            # from enstaller, but for certain reasons this import is required.
-            from enstaller.rollback import save_state
+            # from ensetuptools, but for certain reasons this import is required.
+            from ensetuptools.rollback import save_state
             save_state()
 
 
@@ -1370,10 +1370,10 @@ See the setuptools documentation for the "develop" command for more info.
 
             self.pth_file.save()
 
-            if dist.key=='enstaller':
-                # Ensure that enstaller itself never becomes unavailable!
+            if dist.key=='ensetuptools':
+                # Ensure that ensetuptools itself never becomes unavailable!
                 # XXX should this check for latest version?
-                filename = os.path.join(self.install_dir, 'Enstaller.pth')
+                filename = os.path.join(self.install_dir, 'ensetuptools.pth')
                 if os.path.islink(filename): os.unlink(filename)
                 f = open(filename, 'wt')
                 f.write(self.pth_file.make_relative(dist.location)+'\n')
@@ -1459,7 +1459,7 @@ Proceeding to install.  Please remember that unless you make one of these change
             return  # already did it, or don't need to
 
         sitepy = os.path.join(self.install_dir, "site.py")
-        source = resource_string(Requirement.parse("enstaller"), "site.py")
+        source = resource_string(Requirement.parse("ensetuptools"), "site.py")
         current = ""
 
         if os.path.exists(sitepy):
@@ -1467,7 +1467,7 @@ Proceeding to install.  Please remember that unless you make one of these change
             current = open(sitepy,'rb').read()
             if not current.startswith('def __boot():'):
                 raise DistutilsError(
-                    "%s is not an enstaller-generated site.py; please"
+                    "%s is not an ensetuptools-generated site.py; please"
                     " remove it." % sitepy
                 )
 
@@ -1579,7 +1579,7 @@ def expand_paths(inputs):
             if not name.endswith('.pth'):
                 # We only care about the .pth files
                 continue
-            if name in ('easy-install.pth','Enstaller.pth'):
+            if name in ('easy-install.pth','ensetuptools.pth'):
                 # Ignore .pth files that we control
                 continue
 
@@ -1961,7 +1961,7 @@ def get_script_args(dist, executable=sys_executable, wininst=False):
 
 
 def bootstrap():
-    # This function is called when an enstaller egg is run using /bin/sh
+    # This function is called when an ensetuptools egg is run using /bin/sh
     import setuptools
 
     argv0 = os.path.dirname(setuptools.__path__[0])
@@ -2001,16 +2001,16 @@ usage: %(script)s [options] requirement_or_url ...
         argv = sys.argv[1:]
 
     if '--version' in argv:
-        from enstaller import __version__
-        print "Enstaller version %s" % __version__
+        from ensetuptools import __version__
+        print "ensetuptools version %s" % __version__
         return
 
     if '--debug' in argv:
-        import setuptools, enstaller
+        import setuptools, ensetuptools
         print "sys.prefix = %r" % sys.prefix
-        print "Enstaller version = %r" % enstaller.__version__
+        print "ensetuptools version = %r" % ensetuptools.__version__
         print setuptools
-        print enstaller
+        print ensetuptools
         return
 
     with_ei_usage(lambda:

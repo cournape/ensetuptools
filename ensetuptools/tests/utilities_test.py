@@ -1,4 +1,4 @@
-from enstaller.utilities import *
+from ensetuptools.utilities import *
 import unittest
 import os, sys
 

@@ -1,6 +1,6 @@
-from enstaller.utilities import remove_eggs_from_path
-from enstaller.repository import LocalRepository
-from enstaller.repository import EasyInstallRepository
+from ensetuptools.utilities import remove_eggs_from_path
+from ensetuptools.repository import LocalRepository
+from ensetuptools.repository import EasyInstallRepository
 import unittest
 import os, sys
 

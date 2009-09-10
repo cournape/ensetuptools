@@ -4,9 +4,9 @@ major = 0
 build = 9
 minor = 6
 
-[enstaller]
+[ensetuptools]
 status = 'alpha'
-major = 3
+major = 1
 minor = 0
 build = 0
 

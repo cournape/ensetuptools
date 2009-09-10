@@ -8,7 +8,7 @@ import xmlrpclib
 from distutils import log
 from setuptools.command.easy_install import easy_install, PthDistributions
 
-class enstaller(easy_install):
+class ensetuptools(easy_install):
     user_options = [
         ('prefix=', None, "installation prefix"),
         ("zip-ok", "z", "install package as a zipfile"),

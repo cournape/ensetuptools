@@ -12,11 +12,11 @@ import os
 import sys
 
 from distutils import sysconfig
-from enstaller.package import EasyInstallPackage, RemotePackage
-from enstaller.repository import (EasyInstallRepository, HTMLRepository,
+from ensetuptools.package import EasyInstallPackage, RemotePackage
+from ensetuptools.repository import (EasyInstallRepository, HTMLRepository,
                                   RepositoryUnion)
-from enstaller.upgrade import upgrade
-from enstaller.utilities import remove_eggs_from_path, user_select, query_user
+from ensetuptools.upgrade import upgrade
+from ensetuptools.utilities import remove_eggs_from_path, user_select, query_user
 from logging import error, warning, info
 
 

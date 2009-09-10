@@ -10,7 +10,7 @@ execfile(convert_path('setuptools/command/__init__.py'), d)
 SETUP_COMMANDS = d['__all__']
 
 d = {}
-execfile(convert_path('enstaller/__init__.py'), d)
+execfile(convert_path('ensetuptools/__init__.py'), d)
 kwds['version'] = d['__version__']
 
 f = open('README.txt')
@@ -23,14 +23,13 @@ import sys
 scripts = []
 
 setup(
-    name="Enstaller",
+    name="ensetuptools",
     description = ("A replacement for setuptools that builds on top of it and "
-        "adds additional features."),
+                   "adds additional features."),
     author="Enthought, Inc.",
     author_email="info@enthought.com",
     license="BSD",
     keywords = "CPAN PyPI distutils eggs package management",
-    url = "http://code.enthought.com/projects/enstaller",
     test_suite = 'setuptools.tests',
     packages = find_packages(),
     package_data = {'setuptools':['*.exe']},
@@ -75,9 +74,7 @@ setup(
              "easy_install = setuptools.command.easy_install:main",
              "easy_install-%s = setuptools.command.easy_install:main"
                 % sys.version[:3],
-             "enpkg = enstaller.cmdline:main",
-             "new-enpkg = enstaller.enpkg:main",
-             "egginst = egginst.main:main",
+             "easy_manage = ensetuptools.cmdline:main",
         ],
 
         "setuptools.file_finders":

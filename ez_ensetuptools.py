@@ -1,17 +1,17 @@
 #!python
-"""Bootstrap Enstaller installation
+"""Bootstrap ensetuptools installation
 
-If you want to use Enstaller in your package's setup.py, just include this
+If you want to use ensetuptools in your package's setup.py, just include this
 file in the same directory with it, and add this to the top of your setup.py::
 
     from ez_setup import use_setuptools
     use_setuptools()
 
-If you want to require a specific version of Enstaller, set a download
+If you want to require a specific version of ensetuptools, set a download
 mirror, or use an alternate download directory, you can do so by supplying
 the appropriate options to ``use_setuptools()``.
 
-This file can also be run as a script to install or upgrade Enstaller.
+This file can also be run as a script to install or upgrade ensetuptools.
 """
 
 
@@ -23,30 +23,10 @@ except ImportError: from md5 import md5
 
 
 # Setup some global vars
-DEFAULT_VERSION = "3.0.9"
-DEFAULT_URL = "http://pypi.python.org/packages/%s/E/Enstaller/" % sys.version[:3]
+DEFAULT_VERSION = "1.0.0"
+DEFAULT_URL = "http://code.enthought.com/src"
 md5_data = {
-    'Enstaller-3.0.4-py2.4.egg': '6110e9daf82a72b990cf22cacd63db7c',
-    'Enstaller-3.0.4-py2.5.egg': '90be6f931429c6bc76654d66b3c9cae1',
-    'Enstaller-3.0.4-py2.6.egg': 'df2e41fab21ec0b8bbb7952e95b11a0d',
-    'Enstaller-3.0.5-py2.4.egg': 'fdc7c833a3f8ff2f5c7642282767d65b',
-    'Enstaller-3.0.5-py2.5.egg': '6a7f7ea7ae6fa49c42de3c10da2246c3',
-    'Enstaller-3.0.5-py2.6.egg': '1c0f3a05a530fbe970a186c52a7a9443',
-    'Enstaller-3.0.6-py2.4.egg': 'e86123bab51ac0006dabe5b2af0524f1',
-    'Enstaller-3.0.6-py2.5.egg': '2932f69e2bf79eafec9c48e593ca480a',
-    'Enstaller-3.0.6-py2.6.egg': '0d769f89eca4ada98eb9841ce215e2d1',
-    'Enstaller-3.0.7-py2.4.egg': '9ef719fc8ff3f66776dd134998eab923',
-    'Enstaller-3.0.7-py2.5.egg': '7e50280fed345f8608f4b7e496ac619c',
-    'Enstaller-3.0.7-py2.6.egg': '7f9c82bf8bc8b3ade5ff61c9d8fde9a7',
-    'Enstaller-3.0.8-py2.4.egg': 'daf87ca3d5da76f42c422134558e9b84',
-    'Enstaller-3.0.8-py2.5.egg': '469bfec4ba78d09df5ea9877f3631760',
-    'Enstaller-3.0.8-py2.6.egg': '5bbe907981fbb30a892ecc3766dbdbf3',
-    'Enstaller-3.0.9-py2.4.egg': 'ac98db616e6375ee1863fa5484807706',
-    'Enstaller-3.0.9-py2.5.egg': 'ec48dba0c10d58455272d9ebf6d05c07',
-    'Enstaller-3.0.9-py2.6.egg': '2e5dadf0f41a311f611cd7f60b24ee6c',
-    'Enstaller-3.1.0-py2.4.egg': 'e6f975a562c3e1205ad421f2ee1e034e',
-    'Enstaller-3.1.0-py2.5.egg': 'e036fb78ae852d0f4dd417cc93784568',
-    'Enstaller-3.1.0-py2.6.egg': '8d097fefc62625304456365d5b3d7c1e',
+    'ensetuptools-1.0.0-py2.5.egg': 'e036fb78ae852d0f4dd417cc93784568',
 }
 
 
@@ -66,14 +46,14 @@ def use_setuptools(
     version=DEFAULT_VERSION, download_base=DEFAULT_URL, to_dir=os.curdir,
     download_delay=15
 ):
-    """Automatically find/download Enstaller and make it available on sys.path
+    """Automatically find/download ensetuptools and make it available on sys.path
 
-    `version` should be a valid Enstaller version number that is available
+    `version` should be a valid ensetuptools version number that is available
     as an egg for download under the `download_base` URL (which should end with
-    a '/').  `to_dir` is the directory where Enstaller will be downloaded, if
+    a '/').  `to_dir` is the directory where ensetuptools will be downloaded, if
     it is not already available.  If `download_delay` is specified, it should
     be the number of seconds that will be paused before initiating a download,
-    should one be required.  If an older version of Enstaller is installed,
+    should one be required.  If an older version of ensetuptools is installed,
     this routine will print a message to ``sys.stderr`` and raise SystemExit in
     an attempt to abort the calling script.
     """
@@ -88,14 +68,14 @@ def use_setuptools(
     except ImportError:
         return do_download()
     try:
-        pkg_resources.require("Enstaller>="+version)
+        pkg_resources.require("ensetuptools>="+version)
         return
     except pkg_resources.VersionConflict, e:
         if was_imported:
             print >>sys.stderr, (
-            "The required version of Enstaller (>=%s) is not available, and\n"
+            "The required version of ensetuptools (>=%s) is not available, and\n"
             "can't be installed while this script is running. Please install\n"
-            " a more recent version first, using 'easy_install -U Enstaller'."
+            " a more recent version first, using 'easy_install -U ensetuptools'."
             "\n\n(Currently using %r)"
             ) % (version, e.args[0])
             sys.exit(2)
@@ -118,7 +98,7 @@ def download_setuptools(
     `delay` is the number of seconds to pause before an actual download attempt.
     """
     import urllib2, shutil
-    egg_name = "Enstaller-%s-py%s.egg" % (version,sys.version[:3])
+    egg_name = "ensetuptools-%s-py%s.egg" % (version,sys.version[:3])
     url = download_base + egg_name
     saveto = os.path.join(to_dir, egg_name)
     src = dst = None
@@ -128,7 +108,7 @@ def download_setuptools(
             if delay:
                 log.warn("""
 ---------------------------------------------------------------------------
-This script requires Enstaller version %s to run (even to display
+This script requires ensetuptools version %s to run (even to display
 help).  I will attempt to download it for you (from
 %s), but
 you may need to enable firewall access for this script first.
@@ -158,7 +138,7 @@ and place it in this directory before rerunning this script.)
 
 
 def main(argv, version=DEFAULT_VERSION):
-    """Install or upgrade Enstaller"""
+    """Install or upgrade ensetuptools"""
     try:
         import setuptools
     except ImportError:
@@ -180,7 +160,7 @@ def main(argv, version=DEFAULT_VERSION):
             )
             sys.exit(2)
 
-    req = "Enstaller>="+version
+    req = "ensetuptools>="+version
     import pkg_resources
     try:
         pkg_resources.require(req)
@@ -196,8 +176,8 @@ def main(argv, version=DEFAULT_VERSION):
             from setuptools.command.easy_install import main
             main(argv)
         else:
-            print "Enstaller version %s or greater has been installed." % version
-            print '(Run "ez_enstaller.py -U Enstaller" to reinstall or upgrade.)'
+            print "ensetuptools version %s or greater has been installed." % version
+            print '(Run "ez_ensetuptools.py -U ensetuptools" to reinstall or upgrade.)'
 
 
 def update_md5(filenames):

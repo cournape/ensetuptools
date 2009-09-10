@@ -17,7 +17,7 @@ from logging import debug, info, warning
 from shutil import rmtree, copyfile
 
 from distutils.errors import DistutilsError
-from enstaller.utilities import (rmtree_error, run_scripts,
+from ensetuptools.utilities import (rmtree_error, run_scripts,
                                  get_egg_specs_from_info)
 from pkg_resources import Requirement, Distribution
 from setuptools.archive_util import unpack_archive

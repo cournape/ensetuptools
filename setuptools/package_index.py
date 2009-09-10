@@ -3,7 +3,7 @@ import sys, os.path, re, urlparse, urllib2, shutil, random, socket, cStringIO
 from pkg_resources import *
 from distutils import log
 from distutils.errors import DistutilsError
-from enstaller.config import get_configured_index
+from ensetuptools.config import get_configured_index
 try:
     from hashlib import md5
 except ImportError:
@@ -144,8 +144,8 @@ def find_external_links(url, page):
             if match:
                 yield urlparse.urljoin(url, htmldecode(match.group(1)))
 
-user_agent = "Python-urllib/%s enstaller/%s" % (
-    urllib2.__version__, require('enstaller')[0].version
+user_agent = "Python-urllib/%s ensetuptools/%s" % (
+    urllib2.__version__, require('ensetuptools')[0].version
 )
 
 
@@ -175,7 +175,7 @@ class PackageIndex(Environment):
 
     def __init__(self, index_url=None,
                  hosts=('*',), *args, **kw):
-        # DMP 2009.05.13: Added 'no_default_index' keyword to allow enstaller
+        # DMP 2009.05.13: Added 'no_default_index' keyword to allow ensetuptools
         # package code to create instances that have no index url at all.  We
         # have to strip this keyword out of the keywords before constructing
         # the base Environment class to avoid exceptions.
@@ -233,7 +233,7 @@ class PackageIndex(Environment):
         base = f.url     # handle redirects
         page = f.read()
         f.close()
-        # DMP 2009.05.13: Allow index_url to be None for enstaller package code.
+        # DMP 2009.05.13: Allow index_url to be None for ensetuptools package code.
         if self.index_url:
             if url.startswith(self.index_url) and getattr(f,'code',None)!=404:
                 page = self.process_index(url, page)
@@ -328,7 +328,7 @@ class PackageIndex(Environment):
         )
 
     def scan_all(self, msg=None, *args):
-        # DMP 2009.05.13: Allow index_url to be None for enstaller package code.
+        # DMP 2009.05.13: Allow index_url to be None for ensetuptools package code.
         if not self.index_url:
             return
 
@@ -340,7 +340,7 @@ class PackageIndex(Environment):
         self.scan_url(self.index_url)
 
     def find_packages(self, requirement):
-        # DMP 2009.05.13: Allow index_url to be None for enstaller package code.
+        # DMP 2009.05.13: Allow index_url to be None for ensetuptools package code.
         if self.index_url:
             self.scan_url(self.index_url + requirement.unsafe_name+'/')
 
