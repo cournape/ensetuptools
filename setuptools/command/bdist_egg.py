@@ -14,9 +14,6 @@ from pkg_resources import EntryPoint
 from types import CodeType
 from setuptools.extension import Library
 
-from ensetuptools.indexed_repo.metadata import data_from_spec
-from ensetuptools.indexed_repo.utils import split_old_version
-
 
 def strip_module(filename):
     if '.' in filename:
@@ -24,91 +21,6 @@ def strip_module(filename):
     if filename.endswith('module'):
         filename = filename[:-6]
     return filename
-
-
-REQ_PAT = re.compile(r'''([\w\-.]+)              # name
-                         (?:[\s=<>]*([\w.]+))?   # version
-                     $''', re.X)
-def convert_requires_txt_line(line):
-    """
-    parses a single line of the file requires.txt, and returns
-    the corresponding spec requirement string, or None.
-    """
-    line = line.strip()
-    if not line:
-        return None
-
-    m = REQ_PAT.match(line)
-    if m is None:
-        print "requirement %r not recognized" % line
-        return None
-
-    res = m.group(1)
-    if m.lastindex == 2:
-        version, build = split_old_version(m.group(2))
-        res += ' %s' % version.replace('-', '_')
-        if build is not None:
-            res += '-%i' % build
-    return res
-
-
-def read_requires_txt(egg_info):
-    """
-    Reads requires.txt and returns a list of requirement strings, to be used
-    as the packages variable in spec/depend.
-    """
-    requires_txt = os.path.join(egg_info, 'requires.txt')
-    if not os.path.isfile(requires_txt):
-        return []
-
-    res = []
-    names = set()
-    for line in open(requires_txt):
-        req_string = convert_requires_txt_line(line)
-        if req_string is None:
-            continue
-        name = req_string.split()[0]
-        if name not in names:
-            res.append(req_string)
-            names.add(name)
-    return res
-
-
-def write_spec_depend(egg_info):
-    """
-    Writes spec/depend.  The information used is gathered from PKG-INFO and
-    requires.txt.  If the version (in PKG-INFO) contains '-', which for
-    example happens with development versions, everything before '-' is used.
-
-    egg_info is the path to the EGG-INFO directory
-    """
-    pkg_info = open(os.path.join(egg_info, 'PKG-INFO')).read()
-    name_pat = re.compile(r'^Name:\s*(\S+)', re.M)
-    version_pat = re.compile(r'^Version:\s*([^-\s]+)(-r\d+)?', re.M)
-    m = version_pat.search(pkg_info)
-    b = 1
-    if m.lastindex == 2:
-        b = m.group(2)[2:]
-    spec = dict(
-        name = name_pat.search(pkg_info).group(1),
-        version = m.group(1),
-        build = int(b),
-        arch = None,
-        platform = sys.platform,
-        osdist = None,
-        python = '%i.%i' % sys.version_info[:2],
-        packages = read_requires_txt(egg_info),
-    )
-
-    spec_dir = os.path.join(egg_info, 'spec')
-    if not os.path.isdir(spec_dir):
-        log.info("creating directory: %r" % spec_dir)
-        os.mkdir(spec_dir)
-    path = os.path.join(spec_dir, 'depend')
-    log.info("writing: %r" % path)
-    fo = open(path, 'w')
-    fo.write(data_from_spec(spec))
-    fo.close()
 
 
 def write_stub(resource, pyfile):
@@ -300,9 +212,6 @@ class bdist_egg(Command):
 
         if self.exclude_source_files:
             self.zap_pyfiles()
-
-        # Create spec/depend
-        write_spec_depend(egg_info)
 
         # Make the archive
         make_zipfile(self.egg_output, archive_root, verbose=self.verbose,
