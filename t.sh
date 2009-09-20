@@ -3,20 +3,24 @@
 EPD=/home/ischnell/epd
 
 pushd $EPD/lib/python2.5/site-packages
-rm -rf ensetuptools* easy* setuptools pkg_resources* Enstaller* site*
+rm -rf ensetuptools* easy* setuptools pkg_resources* [Ee]nstaller* site*
 popd
 
 pushd $EPD/bin
 rm -rf egginst enpkg easy*
 popd
 
+exit 0
+
 BOOT=/home/ischnell/enicab/enicab/inst_files/boot-enst.py
 ENSTALLER_EGG=/home/ischnell/Enstaller/dist/Enstaller-4.0.1-1.egg
 
-$EPD/bin/python $BOOT $ENSTALLER_EGG
-$EPD/bin/enpkg -h || exit 1
+#$EPD/bin/python $BOOT $ENSTALLER_EGG
+#$EPD/bin/enpkg -h || exit 1
 
 # --------------------------------------------------------------------
+
+exit 0
 
 if true; then
 #if false; then
@@ -31,7 +35,7 @@ if true; then
 
     $EPD/bin/egginst $EGG || exit 1
 else
-    EGG=EXnstaller-4.0.0-2.egg
+    EGG=Enstaller-4.0.0-2.egg
     pushd /home/ischnell/foo
     rm -f *.egg
     zip -r $EGG *
