@@ -3,14 +3,12 @@ CHANGELOG.txt
 LICENSE.txt
 README.txt
 TODO.txt
-depend.txt
 easy_install.py
 ez_ensetuptools.py
 launcher.c
 pkg_resources.py
 setup.py
 site.py
-t.sh
 version.dat
 virtual-python.py
 docs/EasyInstall.txt
