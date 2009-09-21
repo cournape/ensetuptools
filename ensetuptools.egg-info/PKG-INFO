@@ -1,6 +1,6 @@
 Metadata-Version: 1.0
 Name: ensetuptools
-Version: 1.0.0
+Version: 1.0.1
 Summary: A replacement for setuptools that builds on top of it and adds additional features.
 Home-page: UNKNOWN
 Author: Enthought, Inc.
